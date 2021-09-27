@@ -12,6 +12,8 @@ const {
 	start_game_btn
 } = require('./options');
 
+const questions = require('./questions');
+
 const {
 	question_1,
 	question_2,
@@ -20,7 +22,11 @@ const {
 	winner_message
 } = require('./questions');
 
+
+
 const chats = {};
+
+const memoize = {};
 
 
 const startGame = async (chatId) => {
@@ -36,6 +42,8 @@ const start = () => {
 		{command: '/info', description: 'Получить информацию о пользователе'},
 		{command: '/game', description: 'Пройти тест'},
 	])
+
+	console.log(questions)
 
 	bot.on('message', async msg => {
 		const text = msg.text;
@@ -71,16 +79,18 @@ const start = () => {
 			return await bot.sendMessage(chatId, question_1.question, question_1.options)
 		}
 
-		console.log(data)
 
 		switch(data) {
 			case question_1.answer:
-				await bot.sendMessage(chatId, 'Это правильный ответ!');
-				return await bot.sendMessage(chatId, question_2.question, question_2.options)
+				console.log(1)
+				 await bot.sendMessage(chatId, 'Это правильный ответ!');
+				 return await bot.sendMessage(chatId, question_2.question, question_2.options)
 			case question_2.answer:
+				console.log(2)
 				 await bot.sendMessage(chatId, 'Это правильный ответ!');
 				return await bot.sendMessage(chatId, question_3.question, question_3.options)
 			case question_3.answer:
+				console.log(3)
 				await bot.sendMessage(chatId, 'Это правильный ответ!');
 				return bot.sendMessage(chatId, question_4.question, question_4.options)
 			case question_4.answer:
@@ -88,7 +98,7 @@ const start = () => {
 				return await bot.sendMessage(chatId, winner_message);
 
 			default:
-				return await bot.sendMessage(chatId, 'Это неверный ответ, попроуй ещё раз');
+				return await bot.sendMessage(chatId, 'Неверный ответ, попроуй ещё раз');
 		}
 
 		// if(data == question_1.answer) {
