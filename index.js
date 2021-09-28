@@ -120,15 +120,16 @@ const start = () => {
 
 
 
+		console.log(data)
 
 		switch(data) {
 			case question_1.answer:
-				// if(!memoize.question1) {
+				if(!memoize.question1) {
 					console.log(1)
-					// memoize.question1 = true;
+					memoize.question1 = true;
 					await bot.sendMessage(chatId, 'Это правильный ответ!');
 					return await bot.sendMessage(chatId, question_2.question, question_2.options)
-				// }
+				}
 			case question_2.answer:
 				console.log(2);
 				console.log(data);
