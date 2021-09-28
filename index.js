@@ -1,17 +1,15 @@
-const TelegramApi = require('node-telegram-bot-api');
-
-const token = '2035541267:AAEBxfKJPrelaM-HwhRJZ1eMlXZ1RU-mbBA';
-
-const bot = new TelegramApi(token, {polling: true})
+// const { Telegraf, Markup } = require('telegraf')
+require('dotenv').config();
 
 const {
 	gameOptions,
 	againOptions,
 	greet_message,
 	start_game_invite,
-	start_game_btn
+	start_game_btn,
+	winner_btn
 } = require('./options');
-
+//
 const questions = require('./questions');
 
 const {
@@ -19,8 +17,48 @@ const {
 	question_2,
 	question_3,
 	question_4,
-	winner_message
+	winner_message,
 } = require('./questions');
+
+// const bot = new Telegraf(process.env.BOT_TOKEN);
+//
+// bot.start( async (ctx) => {
+// 	await ctx.replyWithSticker('https://tlgrm.eu/_/stickers/4dd/300/4dd300fd-0a89-3f3d-ac53-8ec93976495e/1.webp')
+// 	await ctx.reply(greet_message)
+// 	await ctx.reply(start_game_invite,
+// 		Markup.inlineKeyboard([
+// 			Markup.button.callback('Поехали', 'поехали'),
+// 		]))
+// })
+//
+//
+// bot.help((ctx) => ctx.reply('Send me a sticker'))
+// bot.on('sticker', (ctx) => ctx.reply('👍'))
+// bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+// bot.launch()
+//
+// bot.on('callback_query', (ctx) => {
+// 	// Explicit usage
+// 	// ctx.telegram.answerCbQuery(ctx.callbackQuery.id)
+//
+// 	// Using context shortcut
+//
+// 	// console.log(ctx.message)
+// 	if(ctx.message.text === 'Поехали') {
+// 		ctx.reply('Вопрос 1');
+// 	}
+//
+// 	ctx.answerCbQuery()
+//
+// })
+
+
+const TelegramApi = require('node-telegram-bot-api');
+require('dotenv').config();
+
+const bot = new TelegramApi(process.env.BOT_TOKEN, {polling: true})
+
+
 
 
 
@@ -80,13 +118,21 @@ const start = () => {
 		}
 
 
+
+
+
 		switch(data) {
 			case question_1.answer:
-				console.log(1)
-				 await bot.sendMessage(chatId, 'Это правильный ответ!');
-				 return await bot.sendMessage(chatId, question_2.question, question_2.options)
+				// if(!memoize.question1) {
+					console.log(1)
+					// memoize.question1 = true;
+					await bot.sendMessage(chatId, 'Это правильный ответ!');
+					return await bot.sendMessage(chatId, question_2.question, question_2.options)
+				// }
 			case question_2.answer:
-				console.log(2)
+				console.log(2);
+				console.log(data);
+				console.log(question_2.answer);
 				 await bot.sendMessage(chatId, 'Это правильный ответ!');
 				return await bot.sendMessage(chatId, question_3.question, question_3.options)
 			case question_3.answer:
@@ -95,7 +141,7 @@ const start = () => {
 				return bot.sendMessage(chatId, question_4.question, question_4.options)
 			case question_4.answer:
 				await bot.sendMessage(chatId, 'Это правильный ответ!');
-				return await bot.sendMessage(chatId, winner_message);
+				return await bot.sendMessage(chatId, winner_message, winner_btn.options);
 
 			default:
 				return await bot.sendMessage(chatId, 'Неверный ответ, попроуй ещё раз');

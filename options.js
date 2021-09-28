@@ -24,5 +24,14 @@ module.exports = {
 				[{text: 'Поехали!', callback_data: 'поехали'}],
 			]
 		})
+	},
+	winner_btn: {
+		options: {
+			reply_markup: JSON.stringify({
+				inline_keyboard: [
+					[{text: 'Получить приз', url: 'www.google.com'}],
+				]
+			})
+		}
 	}
 }
