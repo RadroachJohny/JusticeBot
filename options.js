@@ -17,6 +17,7 @@ module.exports = {
 		})
 	},
 	greet_message: 'Это приветственное сообщение от телеграм бота комании JusticeIt',
+	correct_answer: 'Это правильный ответ!',
 	start_game_invite: 'Мы приготовили для тебя игру и если ты сможешь её пройти, то получишь сюрприз! Готов начать?',
 	start_game_btn: {
 		reply_markup: JSON.stringify({
