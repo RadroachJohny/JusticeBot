@@ -1,6 +1,9 @@
 // const { Telegraf, Markup } = require('telegraf')
 require('dotenv').config();
 
+const keepAlive = require("node-keepalive");
+keepAlive();
+
 const {
 	gameOptions,
 	againOptions,
@@ -122,31 +125,48 @@ const start = () => {
 
 		console.log(data)
 
-		switch(data) {
-			case question_1.answer:
-				if(!memoize.question1) {
-					console.log(1)
-					memoize.question1 = true;
-					await bot.sendMessage(chatId, 'Это правильный ответ!');
-					return await bot.sendMessage(chatId, question_2.question, question_2.options)
-				}
-			case question_2.answer:
-				console.log(2);
-				console.log(data);
-				console.log(question_2.answer);
-				 await bot.sendMessage(chatId, 'Это правильный ответ!');
-				return await bot.sendMessage(chatId, question_3.question, question_3.options)
-			case question_3.answer:
-				console.log(3)
-				await bot.sendMessage(chatId, 'Это правильный ответ!');
-				return bot.sendMessage(chatId, question_4.question, question_4.options)
-			case question_4.answer:
-				await bot.sendMessage(chatId, 'Это правильный ответ!');
-				return await bot.sendMessage(chatId, winner_message, winner_btn.options);
 
-			default:
-				return await bot.sendMessage(chatId, 'Неверный ответ, попроуй ещё раз');
+		if(data === question_1.answer) {
+			await bot.sendMessage(chatId, 'Это правильный ответ!');
+			return await bot.sendMessage(chatId, question_2.question, question_2.options)
+		}else if(data === question_2.answer) {
+			await bot.sendMessage(chatId, 'Это правильный ответ!');
+			return await bot.sendMessage(chatId, question_3.question, question_3.options)
+		}else if(data === question_3.answer) {
+			await bot.sendMessage(chatId, 'Это правильный ответ!');
+			return bot.sendMessage(chatId, question_4.question, question_4.options)
+		}else if(data === question_4.answer) {
+			await bot.sendMessage(chatId, 'Это правильный ответ!');
+			return await bot.sendMessage(chatId, winner_message, winner_btn.options);
+		}else {
+			return await bot.sendMessage(chatId, 'Неверный ответ, попроуй ещё раз');
 		}
+
+		// switch(data) {
+		// 	case question_1.answer:
+		// 		if(!memoize.question1) {
+		// 			console.log(1)
+		// 			memoize.question1 = true;
+		// 			await bot.sendMessage(chatId, 'Это правильный ответ!');
+		// 			return await bot.sendMessage(chatId, question_2.question, question_2.options)
+		// 		}
+		// 	case question_2.answer:
+		// 		console.log(2);
+		// 		console.log(data);
+		// 		console.log(question_2.answer);
+		// 		 await bot.sendMessage(chatId, 'Это правильный ответ!');
+		// 		return await bot.sendMessage(chatId, question_3.question, question_3.options)
+		// 	case question_3.answer:
+		// 		console.log(3)
+		// 		await bot.sendMessage(chatId, 'Это правильный ответ!');
+		// 		return bot.sendMessage(chatId, question_4.question, question_4.options)
+		// 	case question_4.answer:
+		// 		await bot.sendMessage(chatId, 'Это правильный ответ!');
+		// 		return await bot.sendMessage(chatId, winner_message, winner_btn.options);
+		//
+		// 	default:
+		// 		return await bot.sendMessage(chatId, 'Неверный ответ, попроуй ещё раз');
+		// }
 
 		// if(data == question_1.answer) {
 		// 	await bot.sendMessage(chatId, 'Это правильный ответ!');
