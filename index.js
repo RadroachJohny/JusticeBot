@@ -28,8 +28,8 @@ const {
 } = require('./questions');
 
 bot.start( async (ctx) => {
-	await ctx.replyWithSticker('CAACAgIAAxkBAAEC_ElhVDQx2RIEdvYMo-Hr6Qpo9IGuxQACQQ4AAr1HiEqMhOX5xEAG3CEE',
-		Markup.removeKeyboard())
+	// await ctx.replyWithSticker('CAACAgIAAxkBAAEC_ElhVDQx2RIEdvYMo-Hr6Qpo9IGuxQACQQ4AAr1HiEqMhOX5xEAG3CEE',
+	// 	Markup.removeKeyboard())
 	await ctx.reply(greet_message)
 	await ctx.reply(start_game_invite,
 		Markup.inlineKeyboard([
