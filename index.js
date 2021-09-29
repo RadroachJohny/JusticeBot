@@ -1,6 +1,4 @@
 const { Telegraf, Markup } = require('telegraf')
-const http = require("http");
-
 
 require('dotenv').config();
 
@@ -8,10 +6,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const keepAlive = require("node-keepalive");
 keepAlive();
-
-// setInterval(() => {
-// 	http.get('https://justice-it-bot.herokuapp.com/');
-// }, 60 * 1000)
 
 const {
 	greet_message,
