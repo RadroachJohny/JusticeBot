@@ -6,6 +6,10 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const keepAlive = require("node-keepalive");
 keepAlive();
 
+setInterval(() => {
+	console.log('PING!')
+}, 60 * 1000)
+
 const {
 	greet_message,
 	start_game_invite,
@@ -28,12 +32,14 @@ const {
 } = require('./questions');
 
 bot.start( async (ctx) => {
+	console.log(ctx.chat.id, 'MESSAGE ID!!!')
 	await ctx.replyWithSticker('CAACAgIAAxkBAAEC_ElhVDQx2RIEdvYMo-Hr6Qpo9IGuxQACQQ4AAr1HiEqMhOX5xEAG3CEE',
 		Markup.removeKeyboard())
-	await ctx.reply(greet_message)
+	await ctx.replyWithHTML(greet_message)
+	// await ctx.sendMessage(ctx.chat.id, greet_message, true)
 	await ctx.reply(start_game_invite,
 		Markup.inlineKeyboard([
-			Markup.button.callback('поехали', 'Поехали'),
+			Markup.button.callback('Пройти собеседование', 'Поехали'),
 		]).oneTime())
 })
 
@@ -70,11 +76,11 @@ renderQuestions(question_8, question_9);
 renderQuestions(question_9, question_10);
 
 bot.hears(question_10.answer, async(ctx) => {
-	await ctx.replyWithPhoto({url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiSLFup4D8i9LA1TLFPx0UQnfVlBKNTK1ucA&usqp=CAU'}, Markup.removeKeyboard())
-	await ctx.reply(winner_message,
-		Markup.inlineKeyboard([
-			Markup.button.url('Получить приз!', 'www.google.com'),
-		]).oneTime().resize())
+	await ctx.replyWithHTML(winner_message,
+		Markup.removeKeyboard())
+		// Markup.inlineKeyboard([
+		// 	Markup.button.url('Получить приз!', 'www.google.com'),
+		// ]).oneTime().resize())
 })
 
 bot.on('message', async(ctx) => {
