@@ -1,4 +1,6 @@
 const { Telegraf, Markup } = require('telegraf')
+const http = require("http");
+
 require('dotenv').config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -7,7 +9,7 @@ const keepAlive = require("node-keepalive");
 keepAlive();
 
 setInterval(() => {
-	console.log('PING!')
+	http.get('https://justice-it-bot.herokuapp.com/');
 }, 60 * 1000)
 
 const {
@@ -35,8 +37,7 @@ bot.start( async (ctx) => {
 	console.log(ctx.chat.id, 'MESSAGE ID!!!')
 	await ctx.replyWithSticker('CAACAgIAAxkBAAEC_ElhVDQx2RIEdvYMo-Hr6Qpo9IGuxQACQQ4AAr1HiEqMhOX5xEAG3CEE',
 		Markup.removeKeyboard())
-	await ctx.replyWithHTML(greet_message)
-	// await ctx.sendMessage(ctx.chat.id, greet_message, true)
+	await ctx.replyWithHTML(greet_message, 'extra message')
 	await ctx.reply(start_game_invite,
 		Markup.inlineKeyboard([
 			Markup.button.callback('Пройти собеседование', 'Поехали'),
@@ -78,9 +79,6 @@ renderQuestions(question_9, question_10);
 bot.hears(question_10.answer, async(ctx) => {
 	await ctx.replyWithHTML(winner_message,
 		Markup.removeKeyboard())
-		// Markup.inlineKeyboard([
-		// 	Markup.button.url('Получить приз!', 'www.google.com'),
-		// ]).oneTime().resize())
 })
 
 bot.on('message', async(ctx) => {
