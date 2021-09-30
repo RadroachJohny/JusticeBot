@@ -5,9 +5,9 @@ module.exports = {
 		options: ['padding', 'position', 'margin']
 	},
 	question_2: {
-		question: 'Можно ли задавать line-height в процентах? (2/10)',
-		answer: 'не всегда',
-		options: ['можно', 'нельзя', 'не всегда']
+		question: 'Какого значения свойства position нет в CSS? (2/10)',
+		answer: 'dynamic',
+		options: ['fixed', 'dynamic', 'static']
 	},
 	question_3: {
 		question: 'С помощью какого свойства можно скрыть элемент, но сохранить место, которое он занимает? (3/10)',

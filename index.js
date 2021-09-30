@@ -28,8 +28,10 @@ const {
 	question_10,
 } = require('./questions');
 
+let respondToWrongAnswer = true;
+
 bot.start( async (ctx) => {
-	console.log(ctx.chat.id, 'MESSAGE ID!!!')
+	respondToWrongAnswer = true;
 	await ctx.replyWithSticker('CAACAgIAAxkBAAEC_ElhVDQx2RIEdvYMo-Hr6Qpo9IGuxQACQQ4AAr1HiEqMhOX5xEAG3CEE',
 		Markup.removeKeyboard())
 	await ctx.replyWithHTML(greet_message, 'extra message')
@@ -72,12 +74,15 @@ renderQuestions(question_8, question_9);
 renderQuestions(question_9, question_10);
 
 bot.hears(question_10.answer, async(ctx) => {
+	respondToWrongAnswer = false;
 	await ctx.replyWithHTML(winner_message,
 		Markup.removeKeyboard())
 })
 
 bot.on('message', async(ctx) => {
-	await ctx.reply(wrong_answer);
+	console.log(respondToWrongAnswer)
+	if(respondToWrongAnswer) await ctx.reply(wrong_answer);
+
 })
 
 bot.launch();
